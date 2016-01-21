@@ -56,6 +56,9 @@ uchar ispWriteEEPROM(unsigned int address, uchar data);
 /* pointer to sw or hw transmit function */
 uchar (*ispTransmit)(uchar);
 
+void ispTransmitStart();
+void ispTransmitEnd();
+
 /* set SCK speed. call before ispConnect! */
 void ispSetSCKOption(uchar sckoption);
 

@@ -67,6 +67,15 @@ uchar usbFunctionSetup(uchar data[8]) {
 		replyBuffer[3] = ispTransmit(data[5]);
 		len = 4;
 
+	} else if (data[1] == USBASP_FUNC_TRANSMIT2) {
+		ispTransmitStart();
+		replyBuffer[0] = ispTransmit(data[2]);
+		replyBuffer[1] = ispTransmit(data[3]);
+		replyBuffer[2] = 0;
+		replyBuffer[3] = 0;
+		ispTransmitEnd();
+		len = 4;
+
 	} else if (data[1] == USBASP_FUNC_READFLASH) {
 
 		if (!prog_address_newmode)

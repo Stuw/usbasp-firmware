@@ -171,11 +171,20 @@ uchar ispTransmit_sw(uchar send_byte) {
 	return rec_byte;
 }
 
+
+void ispTransmitStart() {
+	ISP_OUT &= ~(1 << ISP_RST); /* RST low */
+}
+
+void ispTransmitEnd() {
+	ISP_OUT |= (1 << ISP_RST); /* RST high */
+}
+
 uchar ispTransmit_hw(uchar send_byte) {
 	SPDR = send_byte;
-
 	while (!(SPSR & (1 << SPIF)))
 		;
+
 	return SPDR;
 }
 
