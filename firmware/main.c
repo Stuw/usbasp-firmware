@@ -87,6 +87,12 @@ uchar usbFunctionSetup(uchar data[8]) {
 
 	} else if (data[1] == USBASP_FUNC_ENABLEPROG) {
 		replyBuffer[0] = ispEnterProgrammingMode();
+		if (replyBuffer[0]) {
+			/* Fall back to slow speed */
+			ispSetSCKOption(USBASP_ISP_SCK_8);
+			ispConnect();
+			replyBuffer[0] = ispEnterProgrammingMode();
+		}
 		len = 1;
 
 	} else if (data[1] == USBASP_FUNC_WRITEFLASH) {
