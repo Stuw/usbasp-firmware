@@ -67,15 +67,6 @@ uchar usbFunctionSetup(uchar data[8]) {
 		replyBuffer[3] = ispTransmit(data[5]);
 		len = 4;
 
-	} else if (data[1] == USBASP_FUNC_TRANSMIT2) {
-		ispTransmitStart();
-		replyBuffer[0] = ispTransmit(data[2]);
-		replyBuffer[1] = ispTransmit(data[3]);
-		replyBuffer[2] = 0;
-		replyBuffer[3] = 0;
-		ispTransmitEnd();
-		len = 4;
-
 	} else if (data[1] == USBASP_FUNC_READFLASH) {
 
 		if (!prog_address_newmode)
@@ -199,6 +190,49 @@ uchar usbFunctionSetup(uchar data[8]) {
 		replyBuffer[2] = 0;
 		replyBuffer[3] = 0;
 		len = 4;
+	} else if (data[1] == USBASP_FUNC_TRANSMIT2) {
+		ispTransmitStart();
+		replyBuffer[0] = ispTransmit(data[2]);
+		replyBuffer[1] = ispTransmit(data[3]);
+		replyBuffer[2] = 0;
+		replyBuffer[3] = 0;
+		ispTransmitEnd();
+		len = 4;
+
+	} else if (data[1] == USBASP_FUNC_BEGIN_TRANSFER) {
+		ispTransmitStart();
+
+	} else if (data[1] == USBASP_FUNC_END_TRANSFER) {
+		ispTransmitEnd();
+
+	} else if (data[1] == USBASP_FUNC_TRANSFER1) {
+		replyBuffer[0] = ispTransmit(data[2]);
+		replyBuffer[1] = 0;
+		replyBuffer[2] = 0;
+		replyBuffer[3] = 0;
+		len = 4;
+
+	} else if (data[1] == USBASP_FUNC_TRANSFER2) {
+		replyBuffer[0] = ispTransmit(data[2]);
+		replyBuffer[1] = ispTransmit(data[3]);
+		replyBuffer[2] = 0;
+		replyBuffer[3] = 0;
+		len = 4;
+
+	} else if (data[1] == USBASP_FUNC_TRANSFER3) {
+		replyBuffer[0] = ispTransmit(data[2]);
+		replyBuffer[1] = ispTransmit(data[3]);
+		replyBuffer[2] = ispTransmit(data[4]);
+		replyBuffer[3] = 0;
+		len = 4;
+
+	} else if (data[1] == USBASP_FUNC_TRANSFER4) {
+		replyBuffer[0] = ispTransmit(data[2]);
+		replyBuffer[1] = ispTransmit(data[3]);
+		replyBuffer[2] = ispTransmit(data[4]);
+		replyBuffer[3] = ispTransmit(data[5]);
+		len = 4;
+
 	}
 
 	usbMsgPtr = replyBuffer;
